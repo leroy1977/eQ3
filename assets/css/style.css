@@ -249,6 +249,35 @@ hr {
     background: #31708f;
     border-color: #31708f;
 }
+
+.navbar-nav .language-switcher {
+    margin-left: 15px;
+    padding: 8px 0;
+}
+
+/* For light header versions */
+.header-light .lang-btn {
+    border-color: rgba(0, 0, 0, 0.3);
+    color: #333;
+}
+
+.header-light .lang-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.header-light .lang-btn.active {
+    background: #31708f;
+    color: white;
+    border-color: #31708f;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .navbar-nav .language-switcher {
+        margin: 10px 0;
+        justify-content: center;
+    }
+}
 /*------------------------------------*\
     #TYPOGRAPHY
 \*------------------------------------*/
@@ -8416,3 +8445,4 @@ li.has-dropdown > ul.dropdown-menu > li.dropdown-submenu > ul.dropdown-menu {
     margin-bottom: 15px;
   }
 }
+
