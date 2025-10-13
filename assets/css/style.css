@@ -269,6 +269,31 @@ hr {
     border-radius: 1px;
 }
 
+/* Specific positioning for different containers */
+
+/* In navbar navigation */
+.navbar-nav .language-switcher {
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+    margin-right: 10px;
+}
+
+.navbar-collapse .language-switcher,
+#navbarContent .language-switcher {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+/* In header actions areas */
+.header-actions .language-switcher,
+.navbar-actions .language-switcher {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
 /* Header Variations */
 
 /* For dark/transparent header */
@@ -318,36 +343,11 @@ hr {
     color: white;
 }
 
-/* Navigation Integration */
-.navbar-nav .language-switcher {
-    margin-left: 15px;
-    align-self: center;
-}
-
-.navbar .language-switcher {
-    display: flex;
-    align-items: center;
-}
-
-/* Header positioning */
-.header .language-switcher {
-    position: relative;
-    margin-left: auto;
-}
-
-/* Alternative positions */
-.header-actions .language-switcher,
-.navbar-actions .language-switcher {
-    margin-left: 20px;
-}
-
 /* Mobile Styles */
 @media (max-width: 768px) {
     .language-switcher {
         margin: 10px auto;
         justify-content: center;
-        order: 3;
-        width: fit-content;
     }
     
     .navbar-nav .language-switcher {
@@ -356,9 +356,10 @@ hr {
         width: 100%;
     }
     
-    .header .language-switcher {
-        margin: 10px auto;
-        position: static;
+    .navbar-collapse .language-switcher,
+    #navbarContent .language-switcher {
+        order: 999;
+        margin: 15px 0;
     }
     
     .lang-btn {
@@ -384,34 +385,9 @@ hr {
     }
 }
 
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-    .lang-btn {
-        border: 2px solid currentColor;
-    }
-    
-    .lang-btn.active {
-        background: currentColor;
-        color: white;
-    }
-}
-
-/* Reduced motion support */
-@media (prefers-reduced-motion: reduce) {
-    .lang-btn {
-        transition: none;
-    }
-    
-    .lang-btn:hover {
-        transform: none;
-    }
-}
-
-/* Print styles */
-@media print {
-    .language-switcher {
-        display: none;
-    }
+/* Debug helper - if you still can't see it, add this temporarily */
+.language-switcher {
+    /* border: 2px solid red !important; */ /* Uncomment to see where it is */
 }
 /*------------------------------------*\
     #TYPOGRAPHY
@@ -8580,6 +8556,7 @@ li.has-dropdown > ul.dropdown-menu > li.dropdown-submenu > ul.dropdown-menu {
     margin-bottom: 15px;
   }
 }
+
 
 
 
