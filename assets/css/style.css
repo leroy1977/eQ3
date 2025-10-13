@@ -385,10 +385,6 @@ hr {
     }
 }
 
-/* Debug helper - if you still can't see it, add this temporarily */
-.language-switcher {
-    /* border: 2px solid red !important; */ /* Uncomment to see where it is */
-}
 /*------------------------------------*\
     #TYPOGRAPHY
 \*------------------------------------*/
@@ -8556,6 +8552,7 @@ li.has-dropdown > ul.dropdown-menu > li.dropdown-submenu > ul.dropdown-menu {
     margin-bottom: 15px;
   }
 }
+
 
 
 
