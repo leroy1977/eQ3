@@ -175,10 +175,13 @@ class LanguageSwitcher {
             </div>
         `;
 
-        // Add to header (you might need to adjust the selector based on your header structure)
-        const header = document.querySelector('.header');
+        // Add to header (robust selector for different site structures)
+        const header = document.querySelector('.header, header, .navbar, .site-header');
         if (header) {
-            header.insertAdjacentHTML('beforeend', switcherHTML);
+        header.insertAdjacentHTML('beforeend', switcherHTML);
+        } else {
+        // Fallback: place switcher at top of body if header not found
+        document.body.insertAdjacentHTML('afterbegin', switcherHTML);
         }
 
         // Add event listeners
