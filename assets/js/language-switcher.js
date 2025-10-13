@@ -102,7 +102,7 @@ class LanguageSwitcher {
         const fileName = currentPath.split('/').pop();
         
         // If we're on a Portuguese page and user selects English, redirect to English version
-        if (this.currentLang === 'en' && !fileName.includes('_en')) {
+        if (this.currentLang === 'en' && !fileName.includes('-en')) {
             // For now, we'll just reload as we've already translated all pages
             // In a real implementation, you might have separate files or use a CMS
             window.location.reload();
