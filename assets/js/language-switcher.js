@@ -213,20 +213,25 @@ class LanguageSwitcher {
             </div>
         `;
 
-        // Try these locations in order (outside the main nav menu)
+        // Try these safe locations in order
         const locations = [
-            // Try header container (outside nav)
-            { selector: '.navbar > .container', position: 'beforeend' },
-            { selector: '.header > .container', position: 'beforeend' },
-            { selector: '.navbar-brand', position: 'afterend' },
-            // Try before the navigation
-            { selector: '.navbar-nav', position: 'beforebegin' },
-            { selector: '#navbarContent', position: 'beforebegin' },
-            { selector: '.navbar-collapse', position: 'beforebegin' },
-            // Try specific action areas
+            // Try to find an existing header actions area
             { selector: '.header-actions', position: 'beforeend' },
             { selector: '.navbar-actions', position: 'beforeend' },
-            // Fallbacks
+            { selector: '.header-right', position: 'beforeend' },
+            { selector: '.navbar-right', position: 'beforeend' },
+            
+            // Try to create a new container in the navbar
+            { selector: '.navbar .container', position: 'beforeend' },
+            { selector: '.header .container', position: 'beforeend' },
+            
+            // Try after the navbar brand (safe position)
+            { selector: '.navbar-brand', position: 'afterend' },
+            
+            // Try before the navigation toggle button (for mobile)
+            { selector: '.navbar-toggler', position: 'beforebegin' },
+            
+            // Fallback to header/navbar end
             { selector: '.navbar', position: 'beforeend' },
             { selector: '.header', position: 'beforeend' },
             { selector: 'header', position: 'beforeend' }
@@ -235,14 +240,14 @@ class LanguageSwitcher {
         for (const location of locations) {
             const element = document.querySelector(location.selector);
             if (element) {
-                console.log('Inserting language switcher into:', location.selector);
+                console.log('Inserting language switcher after:', location.selector);
                 element.insertAdjacentHTML(location.position, switcherHTML);
                 this.addEventListeners();
                 return;
             }
         }
         
-        // If no locations found, insert at body start
+        // If no locations found, insert at body start as last resort
         console.log('No suitable location found, inserting at body start');
         document.body.insertAdjacentHTML('afterbegin', switcherHTML);
         this.addEventListeners();
