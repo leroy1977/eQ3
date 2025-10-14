@@ -203,11 +203,12 @@ hr {
 /*------------------------------------*\
     #JS LAMGUAGE SWITCHER
 \*------------------------------------*/
-/* Language Switcher - Menu Integrated & Responsive */
+/* Language Switcher */
 .language-switcher {
     display: flex;
     gap: 4px;
-    margin-left: 20px;
+    margin-left: auto; /* This pushes it to the right WITHOUT moving the menu */
+    margin-right: 15px;
     align-items: center;
 }
 
@@ -239,8 +240,8 @@ hr {
 /* Responsive Design */
 @media (max-width: 768px) {
     .language-switcher {
-        margin-left: 10px;
-        margin-top: 10px;
+        margin-right: 10px;
+        margin-left: auto; /* Keep it on the right */
     }
     
     .language-switcher .lang-btn {
@@ -249,17 +250,7 @@ hr {
     }
 }
 
-/* If your menu has dark background, use this */
-.navbar-dark .language-switcher .lang-btn {
-    color: white;
-    border-color: rgba(255, 255, 255, 0.3);
-}
-
-.navbar-dark .language-switcher .lang-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-/* If your menu has light background, use this */
+/* For light menus */
 .navbar-light .language-switcher .lang-btn {
     color: #333;
     border-color: rgba(0, 0, 0, 0.2);
@@ -268,7 +259,6 @@ hr {
 .navbar-light .language-switcher .lang-btn:hover {
     background: rgba(0, 0, 0, 0.05);
 }
-
 /*------------------------------------*\
     #TYPOGRAPHY
 \*------------------------------------*/
@@ -8436,6 +8426,7 @@ li.has-dropdown > ul.dropdown-menu > li.dropdown-submenu > ul.dropdown-menu {
     margin-bottom: 15px;
   }
 }
+
 
 
 
