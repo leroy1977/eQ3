@@ -213,25 +213,23 @@ class LanguageSwitcher {
             </div>
         `;
 
-        // Try multiple possible locations in order of preference
+        // Try these locations in order (outside the main nav menu)
         const locations = [
-            // Try navbar nav first (most common)
-            { selector: '.navbar-nav', position: 'beforeend' },
-            { selector: '.navbar-collapse', position: 'beforeend' },
-            { selector: '#navbarContent', position: 'beforeend' },
-            { selector: '.nav-menu', position: 'beforeend' },
-            { selector: '.navigation', position: 'beforeend' },
-            // Try header areas
+            // Try header container (outside nav)
+            { selector: '.navbar > .container', position: 'beforeend' },
+            { selector: '.header > .container', position: 'beforeend' },
+            { selector: '.navbar-brand', position: 'afterend' },
+            // Try before the navigation
+            { selector: '.navbar-nav', position: 'beforebegin' },
+            { selector: '#navbarContent', position: 'beforebegin' },
+            { selector: '.navbar-collapse', position: 'beforebegin' },
+            // Try specific action areas
             { selector: '.header-actions', position: 'beforeend' },
             { selector: '.navbar-actions', position: 'beforeend' },
-            { selector: '.header .container', position: 'beforeend' },
-            { selector: '.navbar .container', position: 'beforeend' },
-            // Fallback to main header areas
-            { selector: '.header', position: 'beforeend' },
-            { selector: 'header', position: 'beforeend' },
+            // Fallbacks
             { selector: '.navbar', position: 'beforeend' },
-            // Ultimate fallback
-            { selector: 'body', position: 'afterbegin' }
+            { selector: '.header', position: 'beforeend' },
+            { selector: 'header', position: 'beforeend' }
         ];
 
         for (const location of locations) {
@@ -268,9 +266,8 @@ class LanguageSwitcher {
     }
 }
 
-// Better initialization that waits for the page to fully load
+// Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
-    // Wait a bit longer to ensure all elements are loaded
     setTimeout(() => {
         new LanguageSwitcher();
     }, 100);
