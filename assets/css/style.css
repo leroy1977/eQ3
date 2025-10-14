@@ -203,41 +203,34 @@ hr {
 /*------------------------------------*\
     #JS LAMGUAGE SWITCHER
 \*------------------------------------*/
-/* Language Switcher - Top Right Position */
-
-/* Add this if not already present */
-header {
-    position: relative;
-}
+/* Language Switcher - Inside Menu Bar */
 .language-switcher {
-    position: absolute;
-    top: 20px;
-    right: 20px;
     display: inline-flex;
     background: rgba(255, 255, 255, 0.95);
-    border-radius: 8px;
+    border-radius: 6px;
     padding: 4px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
     border: 1px solid #e1e5e9;
     font-family: Arial, sans-serif;
-    z-index: 1000;
     gap: 2px;
+    margin-left: auto; /* This pushes it to the right side of menu */
+    margin-right: 20px; /* Space from right edge */
 }
 
 .language-switcher .lang-btn {
     background: transparent;
     border: none;
-    border-radius: 6px;
-    padding: 8px 16px;
+    border-radius: 4px;
+    padding: 6px 12px;
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 14px;
+    gap: 6px;
+    font-size: 13px;
     font-weight: 600;
     color: #666;
-    min-width: 70px;
+    min-width: 60px;
     justify-content: center;
 }
 
@@ -252,11 +245,11 @@ header {
 }
 
 .language-switcher .flag {
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .language-switcher .text {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: bold;
     text-transform: uppercase;
 }
@@ -264,9 +257,14 @@ header {
 /* Mobile responsive */
 @media (max-width: 768px) {
     .language-switcher {
-        position: fixed;
-        top: 15px;
-        right: 15px;
+        margin-right: 10px;
+        padding: 3px;
+    }
+    
+    .language-switcher .lang-btn {
+        padding: 5px 10px;
+        min-width: 55px;
+        font-size: 12px;
     }
 }
 /*------------------------------------*\
@@ -8436,6 +8434,7 @@ li.has-dropdown > ul.dropdown-menu > li.dropdown-submenu > ul.dropdown-menu {
     margin-bottom: 15px;
   }
 }
+
 
 
 
