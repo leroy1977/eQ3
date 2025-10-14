@@ -201,100 +201,59 @@ hr {
   }
 }
 /*------------------------------------*\
-    #JS LAMGUAGE SWITCHER
+  #LANGUAGE SWITCHER (menu integrated)
 \*------------------------------------*/
-/* Language Switcher Styles */
+
 .language-switcher {
-    position: relative;
-    display: inline-block;
-    font-family: Arial, sans-serif;
-    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .language-switcher .lang-btn {
-    background: rgba(255, 255, 255, 0.9);
-    border: 2px solid #e0e0e0;
-    border-radius: 6px;
-    padding: 8px 12px;
-    margin: 0 2px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 14px;
+    background: transparent;
+    border: none;
+    color: inherit;
     font-weight: 600;
-    color: #333;
-    text-decoration: none;
-}
-
-.language-switcher .lang-btn:hover {
-    background: #f8f9fa;
-    border-color: #007bff;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2);
-}
-
-.language-switcher .lang-btn.active {
-    background: #007bff;
-    border-color: #007bff;
-    color: white;
-}
-
-.language-switcher .lang-btn.active .flag {
-    filter: brightness(0) invert(1);
-}
-
-.language-switcher .flag {
-    font-size: 16px;
-    line-height: 1;
-}
-
-.language-switcher .text {
-    font-size: 12px;
-    font-weight: bold;
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 6px 10px;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
     text-transform: uppercase;
 }
 
-/* Header specific positioning */
+.language-switcher .lang-btn:hover {
+    color: var(--accent-color, #007bff);
+}
+
+.language-switcher .lang-btn.active {
+    border-bottom: 2px solid var(--accent-color, #007bff);
+    color: var(--accent-color, #007bff);
+}
+
+.language-switcher-item {
+    list-style: none;
+    margin-left: auto;
+}
+
+/* Optional alignment for header integration */
 header .language-switcher {
     margin-left: auto;
-    margin-right: 15px;
 }
 
-/* Mobile responsive styles */
+/* Responsive behavior for mobile menu */
 @media (max-width: 768px) {
     .language-switcher {
-        position: fixed;
-        top: 15px;
-        right: 15px;
-        z-index: 1001;
+        justify-content: flex-end;
+        padding: 10px 0;
     }
-    
+
     .language-switcher .lang-btn {
-        padding: 6px 10px;
-        font-size: 12px;
-    }
-    
-    .language-switcher .flag {
-        font-size: 14px;
-    }
-    
-    .language-switcher .text {
-        font-size: 10px;
+        font-size: 1rem;
+        padding: 8px 12px;
     }
 }
 
-/* Alternative header positioning */
-.navbar .language-switcher {
-    display: flex;
-    align-items: center;
-}
-
-/* For fixed headers */
-.header-fixed .language-switcher {
-    position: relative;
-}
 /*------------------------------------*\
     #TYPOGRAPHY
 \*------------------------------------*/
@@ -8462,6 +8421,7 @@ li.has-dropdown > ul.dropdown-menu > li.dropdown-submenu > ul.dropdown-menu {
     margin-bottom: 15px;
   }
 }
+
 
 
 
