@@ -14,7 +14,6 @@ class LanguageSwitcher {
         return file.includes("-en") ? "en" : "pt";
     }
 
-    // Save preference and switch
     setLanguage(lang) {
         if (lang === this.currentLang) return;
         localStorage.setItem("preferredLanguage", lang);
@@ -23,25 +22,25 @@ class LanguageSwitcher {
         this.redirectToLanguageVersion(lang);
     }
 
-    // Redirect between PT <-> EN versions of the same page
     redirectToLanguageVersion(lang) {
-        const path = window.location.pathname;
-        const file = path.split("/").pop();
-        const base = file.replace("-en", "").replace(".html", "");
+        let path = window.location.pathname;
+        let file = path.split("/").pop();
 
-        // Define new target filename
-        let newFile;
-        if (lang === "en") {
-            newFile = `${base}-en.html`;
-        } else {
-            newFile = `${base}.html`;
+        // If URL is just the domain root (e.g. https://equanta.com.br/)
+        if (!file || file === "") {
+            file = "index.html";
         }
 
-        // Redirect
-        window.location.href = newFile;
+        const base = file.replace("-en", "").replace(".html", "");
+        let newFile = lang === "en" ? `${base}-en.html` : `${base}.html`;
+
+        // If your site is hosted in a subfolder, preserve its path:
+        const dir = path.substring(0, path.lastIndexOf("/") + 1);
+        const newPath = `${dir}${newFile}`;
+
+        window.location.href = newPath;
     }
 
-    // Create the switcher as a new <li> in the navbar
     createLanguageSwitcher() {
         const navList = document.querySelector(".navbar-nav.ml-auto");
         if (!navList) {
@@ -62,7 +61,6 @@ class LanguageSwitcher {
         this.addEventListeners();
     }
 
-    // Handle click events
     addEventListeners() {
         document.querySelectorAll(".lang-link").forEach((link) => {
             link.addEventListener("click", (e) => {
@@ -73,7 +71,6 @@ class LanguageSwitcher {
         });
     }
 
-    // Highlight active language
     updateActiveButton() {
         document.querySelectorAll(".lang-link").forEach((link) => {
             const isActive = link.dataset.lang === this.currentLang;
