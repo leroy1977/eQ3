@@ -2,31 +2,46 @@
 class LanguageSwitcher {
     constructor() {
         this.currentLang = this.getCurrentLanguage();
-        this.init();
+        document.addEventListener("DOMContentLoaded", () => this.init());
     }
 
-    // Get current language from localStorage or default to PT
+    // Detect saved preference or infer from filename
     getCurrentLanguage() {
-        return localStorage.getItem("preferredLanguage") || "pt";
+        const saved = localStorage.getItem("preferredLanguage");
+        if (saved) return saved;
+
+        const file = window.location.pathname.split("/").pop();
+        return file.includes("-en") ? "en" : "pt";
     }
 
-    // Set language and reload page or update content
+    // Save preference and switch
     setLanguage(lang) {
         if (lang === this.currentLang) return;
         localStorage.setItem("preferredLanguage", lang);
         this.currentLang = lang;
         this.updateActiveButton();
-        this.reloadToLanguage(lang);
+        this.redirectToLanguageVersion(lang);
     }
 
-    // Redirect or reload depending on structure
-    reloadToLanguage(lang) {
-        const currentPage = window.location.pathname.split("/").pop();
-        // You can replace this logic with real translated HTML files later
-        window.location.href = currentPage;
+    // Redirect between PT <-> EN versions of the same page
+    redirectToLanguageVersion(lang) {
+        const path = window.location.pathname;
+        const file = path.split("/").pop();
+        const base = file.replace("-en", "").replace(".html", "");
+
+        // Define new target filename
+        let newFile;
+        if (lang === "en") {
+            newFile = `${base}-en.html`;
+        } else {
+            newFile = `${base}.html`;
+        }
+
+        // Redirect
+        window.location.href = newFile;
     }
 
-    // Create language switcher as a normal navbar item
+    // Create the switcher as a new <li> in the navbar
     createLanguageSwitcher() {
         const navList = document.querySelector(".navbar-nav.ml-auto");
         if (!navList) {
@@ -34,20 +49,20 @@ class LanguageSwitcher {
             return;
         }
 
-        // Use <a> elements instead of <button> for menu-like behavior
-        const switcherHTML = `
-            <li class="nav-item dropdown language-switcher">
-                <a href="#" class="lang-link menu-item ${this.currentLang === "pt" ? "active" : ""}" data-lang="pt">PT</a>
-                <span class="divider">|</span>
-                <a href="#" class="lang-link menu-item ${this.currentLang === "en" ? "active" : ""}" data-lang="en">EN</a>
-            </li>
+        const li = document.createElement("li");
+        li.classList.add("nav-item", "language-switcher");
+
+        li.innerHTML = `
+            <a href="#" class="menu-item lang-link ${this.currentLang === "pt" ? "active" : ""}" data-lang="pt">PT</a>
+            <span class="divider">|</span>
+            <a href="#" class="menu-item lang-link ${this.currentLang === "en" ? "active" : ""}" data-lang="en">EN</a>
         `;
 
-        navList.insertAdjacentHTML("beforeend", switcherHTML);
+        navList.appendChild(li);
         this.addEventListeners();
     }
 
-    // Add click listeners
+    // Handle click events
     addEventListeners() {
         document.querySelectorAll(".lang-link").forEach((link) => {
             link.addEventListener("click", (e) => {
@@ -61,15 +76,14 @@ class LanguageSwitcher {
     // Highlight active language
     updateActiveButton() {
         document.querySelectorAll(".lang-link").forEach((link) => {
-            link.classList.toggle("active", link.dataset.lang === this.currentLang);
+            const isActive = link.dataset.lang === this.currentLang;
+            link.classList.toggle("active", isActive);
         });
     }
 
     init() {
-        document.addEventListener("DOMContentLoaded", () => {
-            this.createLanguageSwitcher();
-            this.updateActiveButton();
-        });
+        this.createLanguageSwitcher();
+        this.updateActiveButton();
     }
 }
 
