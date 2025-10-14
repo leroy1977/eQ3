@@ -201,30 +201,28 @@ hr {
   }
 }
 /*------------------------------------*\
-    #LANGUAGE SWITCHER - EMBEDDED IN NAVBAR
+    #LANGUAGE SWITCHER - IN NAVBAR
 \*------------------------------------*/
 .language-switcher {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-left: auto; /* push to right side of menu */
-    padding: 0;
+    gap: 6px;
+    margin-left: 8px;
 }
 
 .language-switcher .lang-btn {
-    background: transparent;
+    background: none;
     border: none;
-    color: inherit; /* same color as menu links */
+    color: inherit;
     font-weight: 600;
     font-size: 0.9rem;
     cursor: pointer;
-    padding: 8px 6px;
-    transition: color 0.3s ease, transform 0.2s ease;
+    padding: 8px 4px;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
 }
 
 .language-switcher .lang-btn:hover {
     color: var(--accent-color, #31708f);
-    transform: translateY(-1px);
 }
 
 .language-switcher .lang-btn.active {
@@ -232,12 +230,11 @@ hr {
     border-bottom: 2px solid var(--accent-color, #31708f);
 }
 
-/* Responsive inside collapsed menu */
+/* Mobile menu alignment */
 @media (max-width: 991px) {
     .language-switcher {
         justify-content: center;
         margin: 10px 0;
-        width: 100%;
     }
 }
 
@@ -8409,6 +8406,7 @@ li.has-dropdown > ul.dropdown-menu > li.dropdown-submenu > ul.dropdown-menu {
     margin-bottom: 15px;
   }
 }
+
 
 
 
