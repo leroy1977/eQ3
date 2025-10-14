@@ -201,36 +201,45 @@ hr {
   }
 }
 /*------------------------------------*\
-    #LANGUAGE SWITCHER - IN NAVBAR
+    #LANGUAGE SWITCHER - NAVBAR STYLE
 \*------------------------------------*/
+
 .language-switcher {
     display: flex;
     align-items: center;
-    gap: 6px;
-    margin-left: 8px;
+    margin-left: 10px;
 }
 
-.language-switcher .lang-btn {
-    background: none;
-    border: none;
+.language-switcher .menu-item {
     color: inherit;
+    text-transform: uppercase;
     font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    padding: 8px 4px;
+    font-size: 0.95rem;
+    padding: 8px 10px;
     transition: color 0.3s ease, border-bottom 0.3s ease;
 }
 
-.language-switcher .lang-btn:hover {
+.language-switcher .menu-item:hover {
     color: var(--accent-color, #31708f);
+    text-decoration: none;
 }
 
-.language-switcher .lang-btn.active {
+.language-switcher .menu-item.active {
     color: var(--accent-color, #31708f);
     border-bottom: 2px solid var(--accent-color, #31708f);
 }
 
-/* Mobile menu alignment */
+.language-switcher .divider {
+    color: rgba(255, 255, 255, 0.4);
+    padding: 0 5px;
+}
+
+/* Light header adaptation */
+.header-light .language-switcher .divider {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+/* Responsive */
 @media (max-width: 991px) {
     .language-switcher {
         justify-content: center;
@@ -8406,6 +8415,7 @@ li.has-dropdown > ul.dropdown-menu > li.dropdown-submenu > ul.dropdown-menu {
     margin-bottom: 15px;
   }
 }
+
 
 
 
