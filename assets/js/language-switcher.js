@@ -3,63 +3,67 @@
  * Switches between Portuguese and English versions
  */
 
-class LanguageSwitcher {
-    constructor() {
-        this.currentLang = this.getCurrentLanguage();
-        this.init();
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if switcher already exists
+    if (document.getElementById('language-switcher')) {
+        return;
     }
 
-    init() {
-        // Create language switcher UI if it doesn't exist
-        this.createSwitcher();
-        this.updateSwitcherState();
-        this.bindEvents();
-    }
-
-    getCurrentLanguage() {
-        // Check if current page is English version
+    function getCurrentLanguage() {
         const currentPath = window.location.pathname;
-        return currentPath.includes('-en.html') || currentPath.endsWith('index-en.html') ? 'en' : 'pt';
+        const currentFile = currentPath.split('/').pop();
+        return currentFile.includes('-en.html') || currentFile === 'index-en.html' ? 'en' : 'pt';
     }
 
-    createSwitcher() {
-        // Check if switcher already exists
-        if (document.getElementById('language-switcher')) {
-            return;
-        }
-
-        // Create switcher element
+    function createSwitcher() {
+        const currentLang = getCurrentLanguage();
+        
         const switcher = document.createElement('div');
         switcher.id = 'language-switcher';
         switcher.className = 'language-switcher';
         switcher.innerHTML = `
-            <button class="lang-btn pt-br ${this.currentLang === 'pt' ? 'active' : ''}" data-lang="pt">
+            <button class="lang-btn pt-br ${currentLang === 'pt' ? 'active' : ''}" data-lang="pt" type="button">
                 <span class="flag">🇧🇷</span>
                 <span class="text">PT</span>
             </button>
-            <button class="lang-btn en-us ${this.currentLang === 'en' ? 'active' : ''}" data-lang="en">
+            <button class="lang-btn en-us ${currentLang === 'en' ? 'active' : ''}" data-lang="en" type="button">
                 <span class="flag">🇺🇸</span>
                 <span class="text">EN</span>
             </button>
         `;
 
-        // Try to insert in header, or fallback to body
-        const header = document.querySelector('header') || document.body;
-        header.appendChild(switcher);
-    }
+        // Try to find the navigation menu to insert the language switcher
+        const navMenu = document.querySelector('.navbar-nav') || 
+                       document.querySelector('.nav') || 
+                       document.querySelector('.navigation') ||
+                       document.querySelector('nav ul') ||
+                       document.querySelector('.menu');
 
-    bindEvents() {
-        document.addEventListener('click', (e) => {
-            if (e.target.closest('.lang-btn')) {
-                const button = e.target.closest('.lang-btn');
-                const targetLang = button.getAttribute('data-lang');
-                this.switchLanguage(targetLang);
+        if (navMenu) {
+            // Create a list item and append the switcher to it
+            const listItem = document.createElement('li');
+            listItem.className = 'menu-item-language-switcher';
+            listItem.appendChild(switcher);
+            navMenu.appendChild(listItem);
+        } else {
+            // Fallback: insert in header
+            const header = document.querySelector('header');
+            if (header) {
+                header.appendChild(switcher);
+            } else {
+                // Last resort: insert at body start
+                document.body.insertBefore(switcher, document.body.firstChild);
             }
-        });
+        }
+
+        console.log('Language switcher created in menu');
     }
 
-    switchLanguage(targetLang) {
-        if (targetLang === this.currentLang) return;
+    function switchLanguage(targetLang) {
+        const currentLang = getCurrentLanguage();
+        if (targetLang === currentLang) {
+            return;
+        }
 
         const currentPath = window.location.pathname;
         const currentFile = currentPath.split('/').pop();
@@ -91,44 +95,18 @@ class LanguageSwitcher {
         window.location.href = newFullUrl;
     }
 
-    updateSwitcherState() {
-        const switcher = document.getElementById('language-switcher');
-        if (!switcher) return;
-
-        const ptBtn = switcher.querySelector('.pt-br');
-        const enBtn = switcher.querySelector('.en-us');
-
-        if (ptBtn && enBtn) {
-            ptBtn.classList.toggle('active', this.currentLang === 'pt');
-            enBtn.classList.toggle('active', this.currentLang === 'en');
-        }
+    function bindEvents() {
+        document.addEventListener('click', function(e) {
+            const langBtn = e.target.closest('.lang-btn');
+            if (langBtn) {
+                e.preventDefault();
+                const targetLang = langBtn.getAttribute('data-lang');
+                switchLanguage(targetLang);
+            }
+        });
     }
 
-    // Utility method to get opposite language page URL
-    getOppositeLanguageUrl() {
-        const currentPath = window.location.pathname;
-        const currentFile = currentPath.split('/').pop();
-        
-        if (this.currentLang === 'pt') {
-            if (currentFile === 'index.html') return 'index-en.html';
-            return currentFile.replace('.html', '-en.html');
-        } else {
-            if (currentFile === 'index-en.html') return 'index.html';
-            return currentFile.replace('-en.html', '.html');
-        }
-    }
-}
-
-// Initialize language switcher when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    window.eQ2LanguageSwitcher = new LanguageSwitcher();
+    // Initialize
+    createSwitcher();
+    bindEvents();
 });
-
-// Alternative initialization for older browsers
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
-        window.eQ2LanguageSwitcher = new LanguageSwitcher();
-    });
-} else {
-    window.eQ2LanguageSwitcher = new LanguageSwitcher();
-}
