@@ -214,6 +214,10 @@ hr {
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     z-index: 9999;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 /* Language Buttons */
@@ -269,29 +273,29 @@ hr {
     border-radius: 1px;
 }
 
-/* Specific positioning for different containers */
+/* Positioning for different containers */
 
-/* In navbar navigation */
-.navbar-nav .language-switcher {
-    display: flex;
-    align-items: center;
-    margin-left: 15px;
-    margin-right: 10px;
+/* When placed in navbar container (outside nav) */
+.navbar > .container .language-switcher,
+.header > .container .language-switcher {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
-.navbar-collapse .language-switcher,
-#navbarContent .language-switcher {
-    display: flex;
-    justify-content: center;
-    margin: 10px 0;
+/* When placed after navbar brand */
+.navbar-brand + .language-switcher {
+    position: absolute;
+    left: 200px; /* Adjust based on your logo width */
+    top: 50%;
+    transform: translateY(-50%);
 }
 
-/* In header actions areas */
-.header-actions .language-switcher,
-.navbar-actions .language-switcher {
-    display: flex;
-    align-items: center;
-    margin-left: 20px;
+/* When placed before navbar nav */
+.navbar-nav::before .language-switcher {
+    margin-right: 20px;
+    align-self: center;
 }
 
 /* Header Variations */
@@ -346,18 +350,24 @@ hr {
 /* Mobile Styles */
 @media (max-width: 768px) {
     .language-switcher {
+        position: static !important;
+        transform: none !important;
         margin: 10px auto;
         justify-content: center;
+        display: flex;
+        width: fit-content;
     }
     
-    .navbar-nav .language-switcher {
-        margin: 15px 0;
+    .navbar > .container .language-switcher,
+    .header > .container .language-switcher {
+        position: static;
+        transform: none;
+        margin: 10px auto;
+        display: flex;
         justify-content: center;
-        width: 100%;
     }
     
-    .navbar-collapse .language-switcher,
-    #navbarContent .language-switcher {
+    .navbar-collapse .language-switcher {
         order: 999;
         margin: 15px 0;
     }
@@ -385,6 +395,11 @@ hr {
     }
 }
 
+/* Ensure navbar has relative positioning for absolute children */
+.navbar,
+.header {
+    position: relative;
+}
 /*------------------------------------*\
     #TYPOGRAPHY
 \*------------------------------------*/
@@ -8552,6 +8567,7 @@ li.has-dropdown > ul.dropdown-menu > li.dropdown-submenu > ul.dropdown-menu {
     margin-bottom: 15px;
   }
 }
+
 
 
 
