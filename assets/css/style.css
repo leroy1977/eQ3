@@ -267,6 +267,26 @@ hr {
         font-size: 12px;
     }
 }
+
+/* Style for language switcher when inside a menu */
+.menu-item-language-switcher {
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-nav .menu-item-language-switcher {
+    margin-left: auto;
+}
+
+/* Ensure the menu can contain the switcher */
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+
 /*------------------------------------*\
     #TYPOGRAPHY
 \*------------------------------------*/
@@ -8434,6 +8454,7 @@ li.has-dropdown > ul.dropdown-menu > li.dropdown-submenu > ul.dropdown-menu {
     margin-bottom: 15px;
   }
 }
+
 
 
 
