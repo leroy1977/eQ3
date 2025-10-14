@@ -203,89 +203,71 @@ hr {
 /*------------------------------------*\
     #JS LAMGUAGE SWITCHER
 \*------------------------------------*/
-/* Language Switcher - Inside Menu Bar */
+/* Language Switcher - Menu Integrated & Responsive */
 .language-switcher {
-    display: inline-flex;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 6px;
-    padding: 4px;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-    border: 1px solid #e1e5e9;
-    font-family: Arial, sans-serif;
-    gap: 2px;
-    margin-left: auto; /* This pushes it to the right side of menu */
-    margin-right: 20px; /* Space from right edge */
+    display: flex;
+    gap: 4px;
+    margin-left: 20px;
+    align-items: center;
 }
 
 .language-switcher .lang-btn {
-    background: transparent;
-    border: none;
-    border-radius: 4px;
     padding: 6px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    background: transparent;
     cursor: pointer;
-    transition: all 0.3s ease;
+    font-weight: 500;
+    font-size: 12px;
     display: flex;
     align-items: center;
-    gap: 6px;
-    font-size: 13px;
-    font-weight: 600;
-    color: #666;
-    min-width: 60px;
-    justify-content: center;
+    gap: 5px;
+    transition: all 0.3s ease;
+    color: white;
 }
 
 .language-switcher .lang-btn:hover {
-    background: #f8f9fa;
-    color: #333;
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .language-switcher .lang-btn.active {
     background: #007bff;
     color: white;
+    border-color: #007bff;
 }
 
-.language-switcher .flag {
-    font-size: 16px;
-}
-
-.language-switcher .text {
-    font-size: 11px;
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
-/* Mobile responsive */
+/* Responsive Design */
 @media (max-width: 768px) {
     .language-switcher {
-        margin-right: 10px;
-        padding: 3px;
+        margin-left: 10px;
+        margin-top: 10px;
     }
     
     .language-switcher .lang-btn {
         padding: 5px 10px;
-        min-width: 55px;
-        font-size: 12px;
+        font-size: 11px;
     }
 }
 
-/* Style for language switcher when inside a menu */
-.menu-item-language-switcher {
-    list-style: none;
-    display: flex;
-    align-items: center;
+/* If your menu has dark background, use this */
+.navbar-dark .language-switcher .lang-btn {
+    color: white;
+    border-color: rgba(255, 255, 255, 0.3);
 }
 
-.navbar-nav .menu-item-language-switcher {
-    margin-left: auto;
+.navbar-dark .language-switcher .lang-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
 }
 
-/* Ensure the menu can contain the switcher */
-.navbar-nav {
-    display: flex;
-    align-items: center;
-    width: 100%;
+/* If your menu has light background, use this */
+.navbar-light .language-switcher .lang-btn {
+    color: #333;
+    border-color: rgba(0, 0, 0, 0.2);
 }
 
+.navbar-light .language-switcher .lang-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
 
 /*------------------------------------*\
     #TYPOGRAPHY
@@ -8454,6 +8436,7 @@ li.has-dropdown > ul.dropdown-menu > li.dropdown-submenu > ul.dropdown-menu {
     margin-bottom: 15px;
   }
 }
+
 
 
 
