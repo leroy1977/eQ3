@@ -1,91 +1,134 @@
 /**
  * eQ3 Language Switcher
+ * Switches between Portuguese and English versions
  */
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Remove existing switcher if any
-    const existing = document.getElementById('language-switcher');
-    if (existing) {
-        existing.remove();
+class LanguageSwitcher {
+    constructor() {
+        this.currentLang = this.getCurrentLanguage();
+        this.init();
     }
 
-    function getCurrentLanguage() {
+    init() {
+        // Create language switcher UI if it doesn't exist
+        this.createSwitcher();
+        this.updateSwitcherState();
+        this.bindEvents();
+    }
+
+    getCurrentLanguage() {
+        // Check if current page is English version
         const currentPath = window.location.pathname;
-        const currentFile = currentPath.split('/').pop();
-        return currentFile.includes('-en.html') || currentFile === 'index-en.html' ? 'en' : 'pt';
+        return currentPath.includes('-en.html') || currentPath.endsWith('index-en.html') ? 'en' : 'pt';
     }
 
-    function createSwitcher() {
-        const currentLang = getCurrentLanguage();
-        
+    createSwitcher() {
+        // Check if switcher already exists
+        if (document.getElementById('language-switcher')) {
+            return;
+        }
+
+        // Create switcher element
         const switcher = document.createElement('div');
         switcher.id = 'language-switcher';
         switcher.className = 'language-switcher';
         switcher.innerHTML = `
-            <button class="lang-btn ${currentLang === 'pt' ? 'active' : ''}" data-lang="pt" type="button">
-                <span>🇧🇷</span> PT
+            <button class="lang-btn pt-br ${this.currentLang === 'pt' ? 'active' : ''}" data-lang="pt">
+                <span class="flag">🇧🇷</span>
+                <span class="text">PT</span>
             </button>
-            <button class="lang-btn ${currentLang === 'en' ? 'active' : ''}" data-lang="en" type="button">
-                <span>🇺🇸</span> EN
+            <button class="lang-btn en-us ${this.currentLang === 'en' ? 'active' : ''}" data-lang="en">
+                <span class="flag">🇺🇸</span>
+                <span class="text">EN</span>
             </button>
         `;
 
-        // Find the navbar container and append to it
-        const navbar = document.querySelector('.navbar') || 
-                      document.querySelector('nav') ||
-                      document.querySelector('header');
-
-        if (navbar) {
-            navbar.appendChild(switcher);
-        } else {
-            // Fallback
-            document.body.appendChild(switcher);
-        }
+        // Try to insert in header, or fallback to body
+        const header = document.querySelector('header') || document.body;
+        header.appendChild(switcher);
     }
 
-    function switchLanguage(targetLang) {
-        const currentLang = getCurrentLanguage();
-        if (targetLang === currentLang) return;
-
-        const currentPath = window.location.pathname;
-        const currentFile = currentPath.split('/').pop();
-        
-        let newFile = '';
-
-        if (targetLang === 'en') {
-            // Switch to English
-            if (currentFile === 'index.html') {
-                newFile = 'index-en.html';
-            } else if (currentFile.endsWith('.html') && !currentFile.includes('-en.html')) {
-                newFile = currentFile.replace('.html', '-en.html');
-            } else {
-                return;
-            }
-        } else {
-            // Switch to Portuguese
-            if (currentFile === 'index-en.html') {
-                newFile = 'index.html';
-            } else if (currentFile.includes('-en.html')) {
-                newFile = currentFile.replace('-en.html', '.html');
-            } else {
-                return;
-            }
-        }
-
-        window.location.href = newFile;
-    }
-
-    function bindEvents() {
-        document.addEventListener('click', function(e) {
-            const button = e.target.closest('.lang-btn');
-            if (button) {
-                e.preventDefault();
+    bindEvents() {
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.lang-btn')) {
+                const button = e.target.closest('.lang-btn');
                 const targetLang = button.getAttribute('data-lang');
-                switchLanguage(targetLang);
+                this.switchLanguage(targetLang);
             }
         });
     }
 
-    createSwitcher();
-    bindEvents();
+    switchLanguage(targetLang) {
+        if (targetLang === this.currentLang) return;
+
+        const currentPath = window.location.pathname;
+        const currentFile = currentPath.split('/').pop();
+        
+        let newUrl;
+
+        if (targetLang === 'en') {
+            // Switch to English
+            if (currentFile === 'index.html') {
+                newUrl = 'index-en.html';
+            } else if (currentFile.endsWith('.html') && !currentFile.includes('-en.html')) {
+                newUrl = currentFile.replace('.html', '-en.html');
+            } else {
+                newUrl = currentFile;
+            }
+        } else {
+            // Switch to Portuguese
+            if (currentFile === 'index-en.html') {
+                newUrl = 'index.html';
+            } else if (currentFile.includes('-en.html')) {
+                newUrl = currentFile.replace('-en.html', '.html');
+            } else {
+                newUrl = currentFile;
+            }
+        }
+
+        // Preserve query parameters and hash
+        const newFullUrl = newUrl + window.location.search + window.location.hash;
+        window.location.href = newFullUrl;
+    }
+
+    updateSwitcherState() {
+        const switcher = document.getElementById('language-switcher');
+        if (!switcher) return;
+
+        const ptBtn = switcher.querySelector('.pt-br');
+        const enBtn = switcher.querySelector('.en-us');
+
+        if (ptBtn && enBtn) {
+            ptBtn.classList.toggle('active', this.currentLang === 'pt');
+            enBtn.classList.toggle('active', this.currentLang === 'en');
+        }
+    }
+
+    // Utility method to get opposite language page URL
+    getOppositeLanguageUrl() {
+        const currentPath = window.location.pathname;
+        const currentFile = currentPath.split('/').pop();
+        
+        if (this.currentLang === 'pt') {
+            if (currentFile === 'index.html') return 'index-en.html';
+            return currentFile.replace('.html', '-en.html');
+        } else {
+            if (currentFile === 'index-en.html') return 'index.html';
+            return currentFile.replace('-en.html', '.html');
+        }
+    }
+}
+
+// Initialize language switcher when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    window.eQ2LanguageSwitcher = new LanguageSwitcher();
 });
+
+// Alternative initialization for older browsers
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+        window.eQ2LanguageSwitcher = new LanguageSwitcher();
+    });
+} else {
+    window.eQ2LanguageSwitcher = new LanguageSwitcher();
+}
