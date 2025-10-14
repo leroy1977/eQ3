@@ -213,11 +213,8 @@ hr {
     border-radius: 6px;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    z-index: 9999;
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
+    z-index: 1000;
+    margin-left: auto; /* Push to the right */
 }
 
 /* Language Buttons */
@@ -236,14 +233,11 @@ hr {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    overflow: hidden;
 }
 
 .lang-btn:hover {
     background: rgba(255, 255, 255, 0.15);
     transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .lang-btn:active {
@@ -258,44 +252,38 @@ hr {
 .lang-btn.active {
     background: #31708f;
     color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.lang-btn.active::after {
-    content: '';
-    position: absolute;
-    bottom: 2px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 16px;
-    height: 2px;
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 1px;
+/* Safe positioning for different containers */
+
+/* When in header actions area */
+.header-actions .language-switcher,
+.navbar-actions .language-switcher {
+    display: flex;
+    align-self: center;
 }
 
-/* Positioning for different containers */
-
-/* When placed in navbar container (outside nav) */
-.navbar > .container .language-switcher,
-.header > .container .language-switcher {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
+/* When in navbar container - use flex to push to right */
+.navbar .container .language-switcher,
+.header .container .language-switcher {
+    display: flex;
+    margin-left: auto;
+    align-items: center;
 }
 
 /* When placed after navbar brand */
 .navbar-brand + .language-switcher {
-    position: absolute;
-    left: 200px; /* Adjust based on your logo width */
-    top: 50%;
-    transform: translateY(-50%);
+    display: inline-flex;
+    vertical-align: middle;
+    margin-left: 20px;
 }
 
-/* When placed before navbar nav */
-.navbar-nav::before .language-switcher {
-    margin-right: 20px;
-    align-self: center;
+/* When in navbar - use flex layout */
+.navbar .language-switcher {
+    display: flex;
+    margin-left: auto;
+    align-items: center;
+    padding-right: 15px;
 }
 
 /* Header Variations */
@@ -332,13 +320,11 @@ hr {
 .header-light .lang-btn,
 .light-header .lang-btn {
     color: #333;
-    border-color: transparent;
 }
 
 .header-light .lang-btn:hover,
 .light-header .lang-btn:hover {
     background: rgba(0, 0, 0, 0.08);
-    color: #000;
 }
 
 .header-light .lang-btn.active,
@@ -350,54 +336,41 @@ hr {
 /* Mobile Styles */
 @media (max-width: 768px) {
     .language-switcher {
-        position: static !important;
-        transform: none !important;
-        margin: 10px auto;
+        margin: 10px auto !important;
         justify-content: center;
-        display: flex;
-        width: fit-content;
+        display: flex !important;
     }
     
-    .navbar > .container .language-switcher,
-    .header > .container .language-switcher {
+    .navbar .container .language-switcher,
+    .header .container .language-switcher {
+        margin: 10px auto;
+        justify-content: center;
+    }
+    
+    .navbar-brand + .language-switcher {
         position: static;
-        transform: none;
         margin: 10px auto;
         display: flex;
         justify-content: center;
-    }
-    
-    .navbar-collapse .language-switcher {
-        order: 999;
-        margin: 15px 0;
     }
     
     .lang-btn {
         padding: 8px 16px;
         font-size: 14px;
-        min-width: 48px;
-        min-height: 36px;
     }
 }
 
-/* Small mobile devices */
-@media (max-width: 480px) {
-    .language-switcher {
-        gap: 1px;
-        padding: 3px;
-    }
-    
-    .lang-btn {
-        padding: 6px 12px;
-        font-size: 12px;
-        min-width: 42px;
-        min-height: 32px;
-    }
-}
-
-/* Ensure navbar has relative positioning for absolute children */
+/* Ensure navbar uses flex layout */
 .navbar,
 .header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+/* Make sure logo stays visible */
+.navbar-brand {
+    z-index: 1001;
     position: relative;
 }
 /*------------------------------------*\
@@ -8567,6 +8540,7 @@ li.has-dropdown > ul.dropdown-menu > li.dropdown-submenu > ul.dropdown-menu {
     margin-bottom: 15px;
   }
 }
+
 
 
 
