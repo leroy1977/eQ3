@@ -30,40 +30,16 @@ document.addEventListener('DOMContentLoaded', function() {
             </button>
         `;
 
-        // Try to insert in navigation menu (priority order)
-        const navMenu = document.querySelector('.navbar-nav') || 
-                       document.querySelector('nav ul') || 
-                       document.querySelector('.navigation') ||
-                       document.querySelector('.menu');
-        
+        // Find the navbar container and append to it
         const navbar = document.querySelector('.navbar') || 
-                      document.querySelector('header nav') ||
-                      document.querySelector('nav');
+                      document.querySelector('nav') ||
+                      document.querySelector('header');
 
-        if (navMenu) {
-            // Create list item and add to navigation
-            const listItem = document.createElement('li');
-            listItem.style.listStyle = 'none';
-            listItem.style.display = 'flex';
-            listItem.style.alignItems = 'center';
-            listItem.appendChild(switcher);
-            navMenu.appendChild(listItem);
-        } else if (navbar) {
-            // Add directly to navbar
+        if (navbar) {
             navbar.appendChild(switcher);
         } else {
-            // Fallback to header
-            const header = document.querySelector('header');
-            if (header) {
-                header.appendChild(switcher);
-            } else {
-                // Last resort - body with fixed positioning
-                switcher.style.position = 'fixed';
-                switcher.style.top = '15px';
-                switcher.style.right = '15px';
-                switcher.style.zIndex = '1000';
-                document.body.appendChild(switcher);
-            }
+            // Fallback
+            document.body.appendChild(switcher);
         }
     }
 
@@ -83,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } else if (currentFile.endsWith('.html') && !currentFile.includes('-en.html')) {
                 newFile = currentFile.replace('.html', '-en.html');
             } else {
-                return; // No English version found
+                return;
             }
         } else {
             // Switch to Portuguese
@@ -92,11 +68,10 @@ document.addEventListener('DOMContentLoaded', function() {
             } else if (currentFile.includes('-en.html')) {
                 newFile = currentFile.replace('-en.html', '.html');
             } else {
-                return; // No Portuguese version found
+                return;
             }
         }
 
-        // Navigate to new page
         window.location.href = newFile;
     }
 
@@ -111,7 +86,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Initialize everything
     createSwitcher();
     bindEvents();
 });
