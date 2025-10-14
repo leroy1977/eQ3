@@ -201,178 +201,84 @@ hr {
   }
 }
 /*------------------------------------*\
-    #LANGUAGE SWITCHER
+    #JS LAMGUAGE SWITCHER
 \*------------------------------------*/
-
-/* Language Switcher Container */
+/* Language Switcher Styles */
 .language-switcher {
-    display: inline-flex;
-    gap: 2px;
-    padding: 4px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 5px;
     z-index: 1000;
-    margin-left: auto; /* Push to the right */
 }
 
-/* Language Buttons */
 .lang-btn {
-    background: transparent;
-    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     color: white;
-    padding: 6px 12px;
-    border-radius: 4px;
+    padding: 5px 10px;
+    border-radius: 3px;
     cursor: pointer;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     transition: all 0.3s ease;
-    min-width: 44px;
-    min-height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .lang-btn:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.2);
     transform: translateY(-1px);
-}
-
-.lang-btn:active {
-    transform: translateY(0);
-}
-
-.lang-btn:focus {
-    outline: 2px solid rgba(255, 255, 255, 0.5);
-    outline-offset: 2px;
 }
 
 .lang-btn.active {
     background: #31708f;
-    color: white;
+    border-color: #31708f;
 }
 
-/* Safe positioning for different containers */
-
-/* When in header actions area */
-.header-actions .language-switcher,
-.navbar-actions .language-switcher {
-    display: flex;
-    align-self: center;
-}
-
-/* When in navbar container - use flex to push to right */
-.navbar .container .language-switcher,
-.header .container .language-switcher {
-    display: flex;
-    margin-left: auto;
-    align-items: center;
-}
-
-/* When placed after navbar brand */
-.navbar-brand + .language-switcher {
-    display: inline-flex;
-    vertical-align: middle;
-    margin-left: 20px;
-}
-
-/* When in navbar - use flex layout */
-.navbar .language-switcher {
-    display: flex;
-    margin-left: auto;
-    align-items: center;
-    padding-right: 15px;
-}
-
-/* Header Variations */
-
-/* For dark/transparent header */
-.header-transparent .language-switcher,
-.dark-header .language-switcher {
+/* For dark header */
+.header-transparent .lang-btn {
     background: rgba(0, 0, 0, 0.3);
-    border-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
-.header-transparent .lang-btn,
-.dark-header .lang-btn {
-    color: white;
+.header-transparent .lang-btn:hover {
+    background: rgba(0, 0, 0, 0.5);
 }
 
-.header-transparent .lang-btn:hover,
-.dark-header .lang-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.header-transparent .lang-btn.active,
-.dark-header .lang-btn.active {
+.header-transparent .lang-btn.active {
     background: #31708f;
+    border-color: #31708f;
+}
+
+.navbar-nav .language-switcher {
+    margin-left: 15px;
+    padding: 8px 0;
 }
 
 /* For light header versions */
-.header-light .language-switcher,
-.light-header .language-switcher {
-    background: rgba(0, 0, 0, 0.05);
-    border-color: rgba(0, 0, 0, 0.1);
-}
-
-.header-light .lang-btn,
-.light-header .lang-btn {
+.header-light .lang-btn {
+    border-color: rgba(0, 0, 0, 0.3);
     color: #333;
 }
 
-.header-light .lang-btn:hover,
-.light-header .lang-btn:hover {
-    background: rgba(0, 0, 0, 0.08);
+.header-light .lang-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
 }
 
-.header-light .lang-btn.active,
-.light-header .lang-btn.active {
+.header-light .lang-btn.active {
     background: #31708f;
     color: white;
+    border-color: #31708f;
 }
 
-/* Mobile Styles */
+/* Responsive */
 @media (max-width: 768px) {
-    .language-switcher {
-        margin: 10px auto !important;
+    .navbar-nav .language-switcher {
+        margin: 10px 0;
         justify-content: center;
-        display: flex !important;
-    }
-    
-    .navbar .container .language-switcher,
-    .header .container .language-switcher {
-        margin: 10px auto;
-        justify-content: center;
-    }
-    
-    .navbar-brand + .language-switcher {
-        position: static;
-        margin: 10px auto;
-        display: flex;
-        justify-content: center;
-    }
-    
-    .lang-btn {
-        padding: 8px 16px;
-        font-size: 14px;
     }
 }
 
-/* Ensure navbar uses flex layout */
-.navbar,
-.header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-}
-
-/* Make sure logo stays visible */
-.navbar-brand {
-    z-index: 1001;
-    position: relative;
-}
 /*------------------------------------*\
     #TYPOGRAPHY
 \*------------------------------------*/
@@ -8540,6 +8446,7 @@ li.has-dropdown > ul.dropdown-menu > li.dropdown-submenu > ul.dropdown-menu {
     margin-bottom: 15px;
   }
 }
+
 
 
 
