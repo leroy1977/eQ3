@@ -48,7 +48,7 @@
   </url>
 
   <url>
-    <loc>https://www.equanta.com.br/estudos_ambientais_aquaticos.html</loc>
+    <loc>https://www.equanta.com.br/estudos_ambientais_marinhos.html</loc>
     <lastmod>2025-10-15</lastmod>
     <priority>0.80</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.equanta.com.br/estudos_ambientais_marinhos-en.html"/>
@@ -72,7 +72,7 @@
   </url>
 
   <url>
-    <loc>https://www.equanta.com.br/modelagem_dados_ambientais.html</loc>
+    <loc>https://www.equanta.com.br/modelagem_de_dados_ambientais_para_estudos_biodiversidade.html</loc>
     <lastmod>2025-10-15</lastmod>
     <priority>0.80</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.equanta.com.br/modelagem_de_dados_ambientais_para_estudos_biodiversidade-en.html"/>
@@ -80,7 +80,7 @@
   </url>
 
   <url>
-    <loc>https://www.equanta.com.br/uso_publico_areas_naturais.html</loc>
+    <loc>https://www.equanta.com.br/uso_publico_de_areas_naturais.html</loc>
     <lastmod>2025-10-15</lastmod>
     <priority>0.80</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.equanta.com.br/uso_publico_de_areas_naturais.html"/>
@@ -88,7 +88,7 @@
   </url>
 
   <url>
-    <loc>https://www.equanta.com.br/psa_pagamento_servicos_ambientais.html</loc>
+    <loc>https://www.equanta.com.br/psa_pagamento_por_servicos_ambientais.html</loc>
     <lastmod>2025-10-15</lastmod>
     <priority>0.80</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.equanta.com.br/psa_pagamento_por_servicos_ambientais-en.html"/>
@@ -113,4 +113,5 @@
   </url>
 
 </urlset>
+
 
