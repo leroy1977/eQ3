@@ -53,7 +53,7 @@ class LanguageSwitcher {
 
         li.innerHTML = `
             <a href="#" class="menu-item lang-link ${this.currentLang === "pt" ? "active" : ""}" data-lang="pt">PT</a>
-            <span class="divider">  | </span>
+            <span class="divider">    | </span>
             <a href="#" class="menu-item lang-link ${this.currentLang === "en" ? "active" : ""}" data-lang="en">EN</a>
         `;
 
