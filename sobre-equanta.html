@@ -71,6 +71,60 @@
     ============================================= -->
     <title>eQuanta - Sobre Nós - Consultoria Ambiental</title>
 
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+<style>
+  #projectMap {
+    width: 80%;
+    max-width: 800px;
+    height: 520px;
+    margin: 2rem auto;       /* centers horizontally and adds vertical spacing */
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: block;           /* ensures margin auto works */
+  }
+
+  .filter-bar {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+
+  .filter-button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #e0e0e0;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+
+  .filter-button.active {
+    background-color: #004d40;
+    color: white;
+  }
+
+  .info.legend {
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    line-height: 1.4;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.3);
+  }
+
+  .info.legend h4 {
+    margin: 0 0 4px;
+    font-size: 14px;
+  }
+</style>
+
+
+
+	
 </head>
 
 <body>
@@ -358,7 +412,7 @@
                 <a href="https://brasil.un.org/pt-br/sdgs/11" target="_blank"><img src="assets/images/ods/SDG-11.svg" alt="ODS11"></a>
                 </div>
                 <!-- .client end -->
-		<!-- ODS #13 -->
+				<!-- ODS #13 -->
                 <div class="client">
                 <a href="https://brasil.un.org/pt-br/sdgs/13" target="_blank"><img src="assets/images/ods/SDG-13.svg" alt="ODS13"></a>
                 </div>
@@ -368,7 +422,7 @@
                 <a href="https://brasil.un.org/pt-br/sdgs/14" target="_blank"><img src="assets/images/ods/SDG-14.svg" alt="ODS14"></a>
                 </div>
                 <!-- .client end -->
-		<!-- ODS #15 -->
+				<!-- ODS #15 -->
                 <div class="client">
                 <a href="https://brasil.un.org/pt-br/sdgs/15" target="_blank"><img src="assets/images/ods/SDG-15.svg" alt="ODS15"></a>
                 </div>
@@ -384,14 +438,291 @@
         <!-- .row-clients end -->
     </div>
     <!-- .container end -->
+<br><br><br>
+
+  <div class="work--title">
+	<h3>Projetos Realizados</h3>
+	<br>
+    </div>
+
+<p>Visualize nossos projetos concluídos recentemente em todo o Brasil, categorizados em ambientes terrestres e aquáticos.</p>			    
+
+</section>		
+    </div><!-- .container end -->
+
+
+
+<section id="map-section">
+  <!-- <h3>Projetos Realizados</h3> 
+  <p>Visualize nossos projetos concluídos em todo o Brasil, categorizados em ambientes terrestres e aquáticos.</p> -->
+
+  <div class="filter-bar">
+    <button class="filter-button active" data-type="all">Todos</button>
+    <button class="filter-button" data-type="terrestrial">Terrestres 🌿</button>
+    <button class="filter-button" data-type="aquatic">Aquáticos 🌊</button>
+  </div>
+
+  <div id="projectMap"></div>
 </section>
 
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+  // Initialize the map
+  var map = L.map('projectMap').setView([-14.2350, -51.9253], 4); // Brazil center
 
-		
-		
-    </div><!-- .container end -->
-	
-	
+  // Add the tile layer
+ // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  //  attribution: '© OpenStreetMap contributors'
+ // }).addTo(map);
+  
+  
+    // Modern light-gray base map (CartoDB Positron)
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; <a href="https://carto.com/">CARTO</a> | © OpenStreetMap contributors',
+    subdomains: 'abcd',
+    maxZoom: 19
+  }).addTo(map);
+
+  // Define custom icons
+  var terrestrialIcon = L.icon({
+    iconUrl: 'https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-green.png',
+    shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
+
+  var aquaticIcon = L.icon({
+    iconUrl: 'https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-blue.png',
+    shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
+
+// Project data
+  var projects = [
+    {
+      name: "Análise de Vegetação – Guarujá, State of São Paulo",
+      coords: [-23.914036, -46.174051],
+      type: "terrestrial",
+      description: "Estudo de caracterização da vegetação e compensação ambiental em fragmentos urbanos."
+    },
+    {
+      name: "Análise de Viabilidade de Licenciamento Ambiental – Mogi das Cruzes, State of São Paulo",
+      coords: [-23.654646, -46.160328],
+      type: "terrestrial",
+      description: "Diagnóstico da vegetação e estudo de viabilidade para licenciamento em APRM."
+    },
+    {
+      name: "Estudo de Caracterização da Vegetação e Levantamento da Fauna – Jd. Angela, State of São Paulo",
+      coords: [-23.752432, -46.747397],
+      type: "terrestrial",
+      description: "Caracterização da vegetação e levantamento de avifauna e pequenos mamíferos para o Projeto Caoby - SOS Guarapiranga."
+    },      
+    {
+      name: "Análise de Vegetação – Mogi das Cruzes, State of São Paulo",
+      coords: [-23.701942, -46.136218],
+      type: "terrestrial",
+      description: "Estudo de caracterização da vegetação e regularização ambiental em fragmentos rurais em APRM."
+    },        
+    {
+      name: "Análise de Vegetação – Pirituba, State of São Paulo",
+      coords: [-23.473148, -46.711263],
+      type: "terrestrial",
+      description: "Estudo de caracterização da vegetação e compensação ambiental em fragmentos urbanos."
+    },    
+    {
+      name: "Análise de Vegetação – Parelheiros, State of São Paulo",
+      coords: [-23.823448, -46.737433],
+      type: "terrestrial",
+      description: "Estudo de caracterização da vegetação e compensação ambiental em fragmentos urbanos."
+    },    
+    {
+      name: "Análise de Vegetação – Caieiras, State of São Paulo",
+      coords: [-23.401724, -46.661438],
+      type: "terrestrial",
+      description: "Estudo de caracterização da vegetação e compensação ambiental em fragmentos urbanos."
+    },    
+    {
+      name: "Monitoramento Aquático – Guarujá, State of São Paulo",
+      coords: [-24.008864, -46.216434],
+      type: "aquatic",
+      description: "Biomonitoramento em ecossistemas costeiros."
+    },
+    {
+      name: "Monitoramento Aquático – Guarujá, State of São Paulo",
+      coords: [-24.052445, -46.265380],
+      type: "aquatic",
+      description: "Biomonitoramento em ecossistemas costeiros."
+    },
+    {
+      name: "Estudo Marinho – Guarujá, State of São Paulo",
+      coords: [-24.033661, -46.301129],
+      type: "aquatic",
+      description: "Levantamento de comunidades bentônicas e caracterização ambiental marinha."
+    },
+    {
+      name: "Estudo Marinho – Guarujá, State of São Paulo",
+      coords: [-24.008658, -46.326439],
+      type: "aquatic",
+      description: "Levantamento de comunidades bentônicas e caracterização ambiental marinha."
+    },
+    {
+      name: "Monitoramento Aquático – Guarujá, State of São Paulo",
+      coords: [-24.023077, -46.328079],
+      type: "aquatic",
+      description: "Estudo socioecológicos de estoques pesqueiros artesanais."
+    },
+    {
+      name: "Monitoramento Aquático – Bertioga, State of São Paulo",
+      coords: [-23.827267, -46.024690],
+      type: "aquatic",
+      description: "Biomonitoramento em ecossistemas costeiros."
+    },    
+    {
+      name: "Estudo Marinho – Peruíbe, State of São Paulo",
+      coords: [-24.382594, -46.982114],
+      type: "aquatic",
+      description: "Análise de dados para o Plano de Manejo da APAMLS."
+    },
+    {
+      name: "Estudo Marinho – Ubatuba, State of São Paulo",
+      coords: [-23.424090, -44.851087],
+      type: "aquatic",
+      description: "Análise de dados para o Plano de Manejo da APAMLN."
+    },    
+    {
+      name: "Análise de Vegetação – Peruíbe, State of São Paulo",
+      coords: [-24.365303, -47.022869],
+      type: "terrestrial",
+      description: "Estudo de caracterização da vegetação e compensação ambiental em fragmentos urbanos."
+    },    
+    {
+      name: "Análise de Vegetação – São Sebastião, State of São Paulo",
+      coords: [-23.757708, -45.758219],
+      type: "terrestrial",
+      description: "Estudo de caracterização da vegetação e compensação ambiental em APP."
+    },   
+    {
+      name: "Estudo Marinho – Ilhabela, State of São Paulo",
+      coords: [-23.732078, -45.342602],
+      type: "aquatic",
+      description: "Levantamento de comunidades bentônicas e caracterização ambiental marinha."
+    },     
+    {
+      name: "Análise de Vegetação – Ilhabela, State of São Paulo",
+      coords: [-23.814877, -45.352396],
+      type: "terrestrial",
+      description: "Estudo de caracterização da vegetação e compensação ambiental em APP."
+    },    
+    {
+      name: "Monitoramento Aquático – São Sebastião, State of São Paulo",
+      coords: [-23.816096, -45.402165],
+      type: "aquatic",
+      description: "Biomonitoramento em ecossistemas costeiros."
+    },    
+    {
+      name: "Análise de Vegetação – Ubatuba, State of São Paulo",
+      coords: [-23.555755, -45.227367],
+      type: "terrestrial",
+      description: "Estudo de caracterização da vegetação em fragmentos urbanos."
+    },    
+    {
+      name: "Regularização Ambiental – Ubatuba, State of São Paulo",
+      coords: [-23.304803, -44.872206],
+      type: "terrestrial",
+      description: "Análise Técnico-Jurídica e Regularização Ambiental em área rural."
+    },
+    {
+      name: "Monitoramento da Vegetação – Manicoré, State of Amazonas",
+      coords: [-5.692768, -61.164250],
+      type: "terrestrial",
+      description: "Monitoramento da regeneração e degradação da vegetação fauna no bioma amazônico."
+    },
+    {
+      name: "Monitoramento da Vegetação – Humaitá, State of Amazonas",
+      coords: [-7.198048, -62.980334],
+      type: "terrestrial",
+      description: "Monitoramento da regeneração e degradação da vegetação fauna no bioma amazônico."
+    },    
+    {
+      name: "Monitoramento da Vegetação – Itacoatiara, State of Amazonas",
+      coords: [-3.226112, -58.659709],
+      type: "terrestrial",
+      description: "Monitoramento da regeneração e degradação da vegetação fauna no bioma amazônico."
+    },    
+    {
+      name: "Análise de dados oceanográficos – Rio de Janeiro, State of Rio de Janeiro",
+      coords: [-21.976625, -39.203384],
+      type: "aquatic",
+      description: "Análise de dados oceanográficos na bacia de Santos."
+    },
+    {
+      name: "Licenciamento Ambiental em APRM – Mogi das Cruzes - State of São Paulo",
+      coords: [-23.671092, -46.178747],
+      type: "terrestrial",
+      description: "Estudo de caracterização da vegetação em fragmentos urbanos."
+    },
+    {
+      name: "Licenciamento Ambiental em APRM – Mogi das Cruzes - State of São Paulo",
+      coords: [-23.692962, -46.207967],
+      type: "terrestrial",
+      description: "Estudo de caracterização da vegetação em fragmentos rurais."
+    } 
+  ];
+
+  // Add markers dynamically
+  var markers = [];
+
+  function addMarkers(filterType) {
+    // Remove existing markers
+    markers.forEach(m => map.removeLayer(m));
+    markers = [];
+
+    // Add markers based on filter
+    projects.forEach(p => {
+      if (filterType === "all" || p.type === filterType) {
+        var icon = p.type === "terrestrial" ? terrestrialIcon : aquaticIcon;
+        var marker = L.marker(p.coords, { icon: icon })
+          .bindPopup("<b>" + p.name + "</b><br>" + p.description + "<br><i>Categoria: " + (p.type === "terrestrial" ? "Terrestre" : "Aquático") + "</i>")
+          .addTo(map);
+        markers.push(marker);
+      }
+    });
+  }
+
+  // Initial load
+  addMarkers("all");
+
+  // Filter button functionality
+  document.querySelectorAll('.filter-button').forEach(button => {
+    button.addEventListener('click', () => {
+      document.querySelectorAll('.filter-button').forEach(b => b.classList.remove('active'));
+      button.classList.add('active');
+      addMarkers(button.dataset.type);
+    });
+  });
+
+  // Add legend
+  var legend = L.control({ position: "bottomright" });
+  legend.onAdd = function(map) {
+  var div = L.DomUtil.create('div', 'info legend');
+  var categories = ["Terrestre", "Aquático"];
+  var colors = ["#28a745", "#007bff"];  // <-- Match these colors with your pins
+  for (var i = 0; i < categories.length; i++) {
+    div.innerHTML += 
+      '<i style="background:' + colors[i] + '; width:12px; height:12px; display:inline-block; margin-right:6px;"></i> ' +
+      categories[i] + '<br>';
+  }
+  return div;
+};
+  legend.addTo(map);
+</script>
+
 
 </section><!-- #services1 end -->
 
@@ -479,6 +810,7 @@
 <script src="assets/js/functions.js"></script>
 </body>
 </html>
+
 
 
 
