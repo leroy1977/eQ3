@@ -68,6 +68,62 @@
     ============================================= -->
     <title>eQuanta - About Us - Environmental Consulting</title>
 
+
+	
+	
+	<!-- Leaflet CSS -->
+	<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+<style>
+  #projectMap {
+    width: 80%;
+    max-width: 800px;
+    height: 520px;
+    margin: 2rem auto;       /* centers horizontally and adds vertical spacing */
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: block;           /* ensures margin auto works */
+  }
+
+  .filter-bar {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+
+  .filter-button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #e0e0e0;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+
+  .filter-button.active {
+    background-color: #004d40;
+    color: white;
+  }
+
+  .info.legend {
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    line-height: 1.4;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.3);
+  }
+
+  .info.legend h4 {
+    margin: 0 0 4px;
+    font-size: 14px;
+  }
+</style>
+
+
+	
 </head>
 
 <body>
@@ -384,14 +440,293 @@ Our mission is to produce scientific and technical knowledge that supports decis
         <!-- .row-clients end -->
     </div>
     <!-- .container end -->
+
+
+<br><br><br>
+
+  <div class="work--title">
+	<h3>Completed Projects</h3>
+	<br>
+    </div>
+
+<p>View our recently completed projects, categorized into terrestrial and aquatic environments.</p>			    
+
+</section>		
+    </div><!-- .container end -->
+
+
+<!-- Leaflet HTML -->
+<section id="map-section">
+  <!-- <h3>Completed Projects</h3> 
+  <p>View our recently completed projects, categorized into terrestrial and aquatic environments.</p> -->
+
+  <div class="filter-bar">
+    <button class="filter-button active" data-type="all">All</button>
+    <button class="filter-button" data-type="terrestrial">Terrestrial 🌿</button>
+    <button class="filter-button" data-type="aquatic">Aquatic 🌊</button>
+  </div>
+
+  <div id="projectMap"></div>
 </section>
 
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+  // Initialize the map
+  var map = L.map('projectMap').setView([-14.2350, -51.9253], 4); // Brazil center
 
-		
-		
-    </div><!-- .container end -->
-	
-	
+  // Add the tile layer
+ // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  //  attribution: '© OpenStreetMap contributors'
+ // }).addTo(map);
+  
+  
+    // Modern light-gray base map (CartoDB Positron)
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; <a href="https://carto.com/">CARTO</a> | © OpenStreetMap contributors',
+    subdomains: 'abcd',
+    maxZoom: 19
+  }).addTo(map);
+
+  // Define custom icons
+  var terrestrialIcon = L.icon({
+    iconUrl: 'https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-green.png',
+    shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
+
+  var aquaticIcon = L.icon({
+    iconUrl: 'https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-blue.png',
+    shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
+
+// Project data
+  var projects = [
+    {
+    name: "Vegetation Analysis – Guarujá, State of São Paulo",
+    coords: [-23.914036, -46.174051],
+    type: "terrestrial",
+    description: "Vegetation characterization study and environmental compensation in urban fragments."
+  },
+  {
+    name: "Environmental Licensing Feasibility Analysis – Mogi das Cruzes, State of São Paulo",
+    coords: [-23.654646, -46.160328],
+    type: "terrestrial",
+    description: "Vegetation diagnosis and feasibility study for licensing within a Water Protection Area (APRM)."
+  },
+  {
+    name: "Vegetation Characterization and Fauna Survey – Jd. Angela, State of São Paulo",
+    coords: [-23.752432, -46.747397],
+    type: "terrestrial",
+    description: "Vegetation characterization and survey of avifauna and small mammals for the Caoby Project – SOS Guarapiranga."
+  },
+  {
+    name: "Vegetation Analysis – Mogi das Cruzes, State of São Paulo",
+    coords: [-23.701942, -46.136218],
+    type: "terrestrial",
+    description: "Vegetation characterization and environmental regularization study in rural fragments within an APRM."
+  },
+  {
+    name: "Vegetation Analysis – Pirituba, State of São Paulo",
+    coords: [-23.473148, -46.711263],
+    type: "terrestrial",
+    description: "Vegetation characterization study and environmental compensation in urban fragments."
+  },
+  {
+    name: "Vegetation Analysis – Parelheiros, State of São Paulo",
+    coords: [-23.823448, -46.737433],
+    type: "terrestrial",
+    description: "Vegetation characterization study and environmental compensation in urban fragments."
+  },
+  {
+    name: "Vegetation Analysis – Caieiras, State of São Paulo",
+    coords: [-23.401724, -46.661438],
+    type: "terrestrial",
+    description: "Vegetation characterization study and environmental compensation in urban fragments."
+  },
+  {
+    name: "Aquatic Monitoring – Guarujá, State of São Paulo",
+    coords: [-24.008864, -46.216434],
+    type: "aquatic",
+    description: "Biomonitoring in coastal ecosystems."
+  },
+  {
+    name: "Aquatic Monitoring – Guarujá, State of São Paulo",
+    coords: [-24.052445, -46.265380],
+    type: "aquatic",
+    description: "Biomonitoring in coastal ecosystems."
+  },
+  {
+    name: "Marine Study – Guarujá, State of São Paulo",
+    coords: [-24.033661, -46.301129],
+    type: "aquatic",
+    description: "Survey of benthic communities and marine environmental characterization."
+  },
+  {
+    name: "Marine Study – Guarujá, State of São Paulo",
+    coords: [-24.008658, -46.326439],
+    type: "aquatic",
+    description: "Survey of benthic communities and marine environmental characterization."
+  },
+  {
+    name: "Aquatic Monitoring – Guarujá, State of São Paulo",
+    coords: [-24.023077, -46.328079],
+    type: "aquatic",
+    description: "Socioecological study of artisanal fishery stocks."
+  },
+  {
+    name: "Aquatic Monitoring – Bertioga, State of São Paulo",
+    coords: [-23.827267, -46.024690],
+    type: "aquatic",
+    description: "Biomonitoring in coastal ecosystems."
+  },
+  {
+    name: "Marine Study – Peruíbe, State of São Paulo",
+    coords: [-24.382594, -46.982114],
+    type: "aquatic",
+    description: "Data analysis for the Management Plan of the APAMLS."
+  },
+  {
+    name: "Marine Study – Ubatuba, State of São Paulo",
+    coords: [-23.424090, -44.851087],
+    type: "aquatic",
+    description: "Data analysis for the Management Plan of the APAMLN."
+  },
+  {
+    name: "Vegetation Analysis – Peruíbe, State of São Paulo",
+    coords: [-24.365303, -47.022869],
+    type: "terrestrial",
+    description: "Vegetation characterization and environmental compensation study in urban fragments."
+  },
+  {
+    name: "Vegetation Analysis – São Sebastião, State of São Paulo",
+    coords: [-23.757708, -45.758219],
+    type: "terrestrial",
+    description: "Vegetation characterization and environmental compensation study in a Permanent Preservation Area (APP)."
+  },
+  {
+    name: "Marine Study – Ilhabela, State of São Paulo",
+    coords: [-23.732078, -45.342602],
+    type: "aquatic",
+    description: "Survey of benthic communities and marine environmental characterization."
+  },
+  {
+    name: "Vegetation Analysis – Ilhabela, State of São Paulo",
+    coords: [-23.814877, -45.352396],
+    type: "terrestrial",
+    description: "Vegetation characterization and environmental compensation study in a Permanent Preservation Area (APP)."
+  },
+  {
+    name: "Aquatic Monitoring – São Sebastião, State of São Paulo",
+    coords: [-23.816096, -45.402165],
+    type: "aquatic",
+    description: "Biomonitoring in coastal ecosystems."
+  },
+  {
+    name: "Vegetation Analysis – Ubatuba, State of São Paulo",
+    coords: [-23.555755, -45.227367],
+    type: "terrestrial",
+    description: "Vegetation characterization study in urban fragments."
+  },
+  {
+    name: "Environmental Regularization – Ubatuba, State of São Paulo",
+    coords: [-23.304803, -44.872206],
+    type: "terrestrial",
+    description: "Technical-legal analysis and environmental regularization of a rural area."
+  },
+  {
+    name: "Vegetation Monitoring – Manicoré, State of Amazonas",
+    coords: [-5.692768, -61.164250],
+    type: "terrestrial",
+    description: "Monitoring of vegetation regeneration and degradation in the Amazon biome."
+  },
+  {
+    name: "Vegetation Monitoring – Humaitá, State of Amazonas",
+    coords: [-7.198048, -62.980334],
+    type: "terrestrial",
+    description: "Monitoring of vegetation regeneration and degradation in the Amazon biome."
+  },
+  {
+    name: "Vegetation Monitoring – Itacoatiara, State of Amazonas",
+    coords: [-3.226112, -58.659709],
+    type: "terrestrial",
+    description: "Monitoring of vegetation regeneration and degradation in the Amazon biome."
+  },
+  {
+    name: "Oceanographic Data Analysis – Rio de Janeiro, State of Rio de Janeiro",
+    coords: [-21.976625, -39.203384],
+    type: "aquatic",
+    description: "Oceanographic data analysis in the Santos Basin."
+  },
+  {
+    name: "Environmental Licensing in Water Protection Area (APRM) – Mogi das Cruzes, State of São Paulo",
+    coords: [-23.671092, -46.178747],
+    type: "terrestrial",
+    description: "Vegetation characterization study in urban fragments."
+  },
+  {
+    name: "Environmental Licensing in Water Protection Area (APRM) – Mogi das Cruzes, State of São Paulo",
+    coords: [-23.692962, -46.207967],
+    type: "terrestrial",
+    description: "Vegetation characterization study in rural fragments."
+  } 
+  ];
+
+  // Add markers dynamically
+  var markers = [];
+
+  function addMarkers(filterType) {
+    // Remove existing markers
+    markers.forEach(m => map.removeLayer(m));
+    markers = [];
+
+    // Add markers based on filter
+    projects.forEach(p => {
+      if (filterType === "all" || p.type === filterType) {
+        var icon = p.type === "terrestrial" ? terrestrialIcon : aquaticIcon;
+        var marker = L.marker(p.coords, { icon: icon })
+          .bindPopup("<b>" + p.name + "</b><br>" + p.description + "<br><i>Categoria: " + (p.type === "terrestrial" ? "Terrestrial" : "Aquatic") + "</i>")
+          .addTo(map);
+        markers.push(marker);
+      }
+    });
+  }
+
+  // Initial load
+  addMarkers("all");
+
+  // Filter button functionality
+  document.querySelectorAll('.filter-button').forEach(button => {
+    button.addEventListener('click', () => {
+      document.querySelectorAll('.filter-button').forEach(b => b.classList.remove('active'));
+      button.classList.add('active');
+      addMarkers(button.dataset.type);
+    });
+  });
+
+  // Add legend
+  var legend = L.control({ position: "bottomright" });
+  legend.onAdd = function(map) {
+  var div = L.DomUtil.create('div', 'info legend');
+  var categories = ["Terrestrial", "Aquatic"];
+  var colors = ["#28a745", "#007bff"];  // <-- Match these colors with your pins
+  for (var i = 0; i < categories.length; i++) {
+    div.innerHTML += 
+      '<i style="background:' + colors[i] + '; width:12px; height:12px; display:inline-block; margin-right:6px;"></i> ' +
+      categories[i] + '<br>';
+  }
+  return div;
+};
+  legend.addTo(map);
+</script>
+
 
 </section><!-- #services1 end -->
 
