@@ -692,7 +692,7 @@ Our mission is to produce scientific and technical knowledge that supports decis
       if (filterType === "all" || p.type === filterType) {
         var icon = p.type === "terrestrial" ? terrestrialIcon : aquaticIcon;
         var marker = L.marker(p.coords, { icon: icon })
-          .bindPopup("<b>" + p.name + "</b><br>" + p.description + "<br><i>Categoria: " + (p.type === "terrestrial" ? "Terrestrial" : "Aquatic") + "</i>")
+          .bindPopup("<b>" + p.name + "</b><br>" + p.description + "<br><i>Category: " + (p.type === "terrestrial" ? "Terrestrial" : "Aquatic") + "</i>")
           .addTo(map);
         markers.push(marker);
       }
